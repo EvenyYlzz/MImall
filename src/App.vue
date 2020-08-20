@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import storage from './storage/index'
 export default {
   name: 'app',
   components: {
@@ -12,6 +13,13 @@ export default {
   data () {
     return {
     }
+  },
+  mounted () {
+    storage.setItem('a', 1)
+    storage.setItem('user', { a: 1 })
+    storage.setItem('abc', { a: 1 }, 'user')
+    storage.clear('a') // 干掉第一层
+    storage.clear('a', 'user') // 干掉第二层
   }
 }
 </script>
