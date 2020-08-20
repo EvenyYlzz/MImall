@@ -5,15 +5,12 @@
 </template>
 
 <script>
-import jsonp from 'jsonp'
-export dafault {
-  name:'app',
-  components:{
-    
+export default {
+  name: 'app',
+  components: {
   },
-  data() {
+  data () {
     return {
-      
     }
   }
 }
