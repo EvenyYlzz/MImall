@@ -35,7 +35,10 @@
                     </div>
                 </div>
                 <div class="header-search">
-
+                    <div class="wrapper">
+                        <input type="text" name="keyword">
+                        <a href="javascript:;"></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,6 +53,7 @@ export default {
 
 <style lang="scss">
 @import './../assets/scss/base.scss';
+@import './../assets/scss/mixin.scss';
 .header{
     .nav-topbar{
         height: 39px;
@@ -57,9 +61,7 @@ export default {
         background-color: #333333;
         color: #B0B0B0;
         .container{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            @include flex();
             a{
                 display: inline-block;
                 color: #B0B0B0;
@@ -71,11 +73,7 @@ export default {
                 text-align: center;
                 color: #ffffff;
                 .icon-cart{
-                    display: inline-flex;
-                    width: 16px;
-                    height: 12px;
-                    background: url('/imgs/icon-cart-checked.png') no-repeat center;
-                    background-size: contain;
+                    @include bgImg(16px,12px,'/imgs/icon-cart-checked.png');
                     margin-right: 4px;
                 }
             }
@@ -84,9 +82,7 @@ export default {
     .nav-header{
         .container{
             height: 112px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            @include flex();
             .header-logo{
                 display: inline-block;
                 width: 55px;
@@ -98,20 +94,12 @@ export default {
                     height: 55px;
                     &:before{
                         content: ' ';
-                        display: inline-block;
-                        width: 55px;
-                        height: 55px;
-                        background: url('/imgs/mi-logo.png') no-repeat center;
-                        background-size: 55px;
+                        @include bgImg(55px,55px,'/imgs/mi-logo.png',55px);
                         transition: margin .3s;
                     }
                     &:after{
                         content: ' ';
-                        display: inline-block;
-                        width: 55px;
-                        height: 55px;
-                        background: url('/imgs/mi-home.png') no-repeat center;
-                        background-size: 55px;
+                        @include bgImg(55px,55px,'/imgs/mi-home.png',55px);
                     }
                     &:hover:before{
                         margin-left: -55px;
@@ -122,17 +110,39 @@ export default {
             .header-menu{
                 display: inline-block;
                 padding-left: 209px;
-                width: 200px;
+                width: 643px;
                 .item-menu{
                     display: inline-block;
                     color:#333333;
                     font-weight: bold;
                     font-size: 16px;
                     line-height: 112px;
+                    margin-right: 20px;
                     span{
                         cursor: pointer;
                     }
                     &:hover{
+                    }
+                }
+            }
+            .header-search{
+                width: 319px;
+                .wrapper{
+                    height: 54px;
+                    border: 1px solid #E0E0E0;
+                    display: flex;
+                    align-items: center;
+                    input{
+                        border: none;
+                        border-right: 1px solid #E0E0E0;
+                        box-sizing: border-box;
+                        width: 264px;
+                        height: 52px;
+                        padding-left: 14px;
+                    }
+                    a{
+                        @include bgImg(18px,18px,'/imgs/icon-search.png');
+                        margin-left: 16px;
                     }
                 }
             }
