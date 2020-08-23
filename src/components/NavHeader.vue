@@ -9,9 +9,10 @@
                     <a href="javascript:;">协议规则</a>
                 </div>
                 <div class="topbar-user">
-                    <a href="javascript:;">登录</a>
-                    <a href="javascript:;">注册</a>
-                    <a href="javascript:;" class="my-cart"><span class="icon-cart"></span>购物车</a>
+                    <a href="javascript:;" v-if="username">{{username}}</a>
+                    <a href="javascript:;" v-if="!username" @click="login">登录</a>
+                    <a href="javascript:;">我的订单</a>
+                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车</a>
                 </div>
             </div>
         </div>
@@ -25,81 +26,16 @@
                         <span>小米手机</span>
                         <div class="children">
                             <ul>
-                                <li class="product">
-                                    <a href="" target="_blank">
+                                <li class="product" v-for="(item, index) in phoneList" :key="index">
+                                    <a :href="'/#/product/'+item.id" target="_blank">
                                         <div class="pro-img">
-                                            <img src="/imgs/nav-img/nav-1.png" alt="javascript:;">
+                                            <img :src="item.mainImage" :alt="item.subtitle">
                                         </div>
                                         <div class="pro-name">
-                                            小米CC9
+                                            {{item.name}}
                                         </div>
                                         <div class="pro-price">
-                                            1799元
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="/imgs/nav-img/nav-1.png" alt="javascript:;">
-                                        </div>
-                                        <div class="pro-name">
-                                            小米CC9
-                                        </div>
-                                        <div class="pro-price">
-                                            1799元
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="/imgs/nav-img/nav-1.png" alt="javascript:;">
-                                        </div>
-                                        <div class="pro-name">
-                                            小米CC9
-                                        </div>
-                                        <div class="pro-price">
-                                            1799元
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="/imgs/nav-img/nav-1.png" alt="javascript:;">
-                                        </div>
-                                        <div class="pro-name">
-                                            小米CC9
-                                        </div>
-                                        <div class="pro-price">
-                                            1799元
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="/imgs/nav-img/nav-1.png" alt="javascript:;">
-                                        </div>
-                                        <div class="pro-name">
-                                            小米CC9
-                                        </div>
-                                        <div class="pro-price">
-                                            1799元
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="/imgs/nav-img/nav-1.png" alt="javascript:;">
-                                        </div>
-                                        <div class="pro-name">
-                                            小米CC9
-                                        </div>
-                                        <div class="pro-price">
-                                            1799元
+                                            {{item.price | currency}}
                                         </div>
                                     </a>
                                 </li>
@@ -108,11 +44,43 @@
                     </div>
                     <div class="item-menu">
                         <span>RedMi手机</span>
-                        <div class="children"></div>
+                        <!-- <div class="children">
+                            <ul>
+                                <li class="product" v-for="(item) in xiaomishouji" :key="item.id">
+                                    <a href="" target="_blank">
+                                        <div class="pro-img">
+                                            <img :src="item.img" alt="#">
+                                        </div>
+                                        <div class="pro-name">
+                                            {{item.name}}
+                                        </div>
+                                        <div class="pro-price">
+                                            {{item.price}}
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> -->
                     </div>
                     <div class="item-menu">
                         <span>电视</span>
-                        <div class="children"></div>
+                        <div class="children">
+                            <ul>
+                                <li class="product" v-for="(item) in dianshi" :key="item.id">
+                                    <a href="" target="_blank">
+                                        <div class="pro-img">
+                                            <img :src="item.img" alt="#">
+                                        </div>
+                                        <div class="pro-name">
+                                            {{item.name}}
+                                        </div>
+                                        <div class="pro-price">
+                                            {{item.price}}
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="header-search">
@@ -128,7 +96,117 @@
 
 <script>
 export default {
-    name: 'nav-header'
+    name: 'nav-header',
+    data() {
+        return {
+            xiaomishouji: [
+                {
+                    id: 1,
+                    img: '/imgs/nav-img/nav-1.png',
+                    name: '小米CC9',
+                    price: '1799元'
+                },
+                {
+                    id: 2,
+                    img: '/imgs/nav-img/nav-2.png',
+                    name: '小米CC9e',
+                    price: '1299元'
+                },
+                {
+                    id: 3,
+                    img: '/imgs/nav-img/nav-3.png',
+                    name: '小米CC9 美图定制版',
+                    price: '2599元'
+                },
+                {
+                    id: 4,
+                    img: '/imgs/nav-img/nav-4.png',
+                    name: '小米9',
+                    price: '2599元'
+                },
+                {
+                    id: 5,
+                    img: '/imgs/nav-img/nav-5.png',
+                    name: '小米9 Pro 5G',
+                    price: '3699元'
+                },
+                {
+                    id: 6,
+                    img: '/imgs/nav-img/nav-6.png',
+                    name: '小米MIX Alpha',
+                    price: '19999元'
+                }
+            ],
+            dianshi: [
+                {
+                    id: 1,
+                    img: '/imgs/nav-img/nav-3-1.jpg',
+                    name: '小米壁画电视 65英寸',
+                    price: '6999元'
+                },
+                {
+                    id: 2,
+                    img: '/imgs/nav-img/nav-3-2.jpg',
+                    name: '小米全面屏电视E55A',
+                    price: '1999元'
+                },
+                {
+                    id: 3,
+                    img: '/imgs/nav-img/nav-3-3.png',
+                    name: '小米电视4A 32英寸',
+                    price: '699元'
+                },
+                {
+                    id: 4,
+                    img: '/imgs/nav-img/nav-3-4.jpg',
+                    name: '小米电视4A 55英寸',
+                    price: '1799元'
+                },
+                {
+                    id: 5,
+                    img: '/imgs/nav-img/nav-3-5.jpg',
+                    name: '小米电视4A 65英寸',
+                    price: '2699元'
+                },
+                {
+                    id: 6,
+                    img: '/imgs/nav-img/nav-3-6.png',
+                    name: '点击查看',
+                    price: '查看全部'
+                }
+            ],
+            username: 'jack',
+            phoneList: []
+        }
+    },
+    filters: {
+        currency(val) {
+            if (!val) return '0.00'
+            return '￥' + val.toFixed(2) + '元'
+        }
+    },
+    mounted() {
+        this.getProductList()
+    },
+    methods: {
+        getProductList() {
+            this.axios.get('/products', {
+                params: {
+                    categoryId: '100012'
+                }
+            }).then((res) => { //  前面封装的时候，就返回的res.data，所以这里的res=res.data，不用再进行处理
+                if (res.list.length > 6) { //  拦截截取6条数据，因为顶部手机展示不需要那么多条数据
+                    this.phoneList = res.list.slice(0, 6)
+                }
+            })
+        },
+        goToCart() {
+            this.$router.push()
+        },
+        login() {
+            this.$router.push('/login')
+        }
+    }
 }
 </script>
 
@@ -208,17 +286,21 @@ export default {
                         color: $colorA;
                         .children{
                             height: 220px;
+                            opacity: 1;
                         }
                     }
                     .children{
                         position: absolute;
                         top: 112px;
                         left: 0;
-                        height: 220px;
+                        height: 0;
                         width: 1226px;
+                        opacity: 0;
+                        overflow: hidden;   //  少了这个下拉过渡存在问题
                         border-top: 1px solid #E5E5E5;
                         box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
                         z-index: 10;
+                        transition: all .5s;
                         .product{
                             float: left;
                             width: 16.6%;

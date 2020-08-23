@@ -5,7 +5,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 // import env from './env'
 
-const mock = true
+const mock = false
 //  这里只能用require加载，不能用import加载，import是预加载，预加载直接编译的时候，数据就会直接被拦截，永远拿不到，我们希望通过开关来控制数据
 if (mock) {
   require('./mock/api')
