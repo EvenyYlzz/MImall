@@ -193,6 +193,7 @@ export default {
             this.axios.get('/products', {
                 params: {
                     categoryId: '100012'
+                    // pageSize: 6
                 }
             }).then((res) => { //  前面封装的时候，就返回的res.data，所以这里的res=res.data，不用再进行处理
                 if (res.list.length > 6) { //  拦截截取6条数据，因为顶部手机展示不需要那么多条数据
@@ -301,6 +302,7 @@ export default {
                         box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
                         z-index: 10;
                         transition: all .5s;
+                        background-color: $colorG;
                         .product{
                             float: left;
                             width: 16.6%;
@@ -339,7 +341,7 @@ export default {
                                 height: 100px;
                                 width: 1px;
                             }
-                            &:last-child::before{
+                            &:last-child:before{
                                 display: none;
                             }
                         }
