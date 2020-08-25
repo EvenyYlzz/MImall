@@ -30,6 +30,9 @@ export default {
         width: 24.9%;
         text-align: center;
         border-right: 1px solid $colorH;
+        &:last-child{
+            border-right: 0;
+        } //    优化最后一根线
     }
     span{
         display: inline-block;
