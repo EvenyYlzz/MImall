@@ -1,5 +1,5 @@
 <template>
-    <div class="nav-bar">
+    <div class="nav-bar" :class="{'isfixed':isFixed}">
         <div class="container">
             <div class="pro-title">
                 小米8 透明探索版
@@ -16,7 +16,30 @@
 
 <script>
 export default {
-    name: 'nav-bar'
+    name: 'nav-bar',
+    data() {
+        return {
+            isFixed: false
+        }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.initHeight)
+    },
+    methods: {
+        initHeight() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            if (scrollTop > 152) {
+                this.isFixed = true
+            } else {
+                this.isFixed = false
+            }
+        }
+    },
+    //  方法抽取出来好进行销毁
+    destroyed() {
+        //  还有第三个参数，true跟false，决定是用false冒泡还是true捕获
+        window.removeEventListener('scroll', this.initHeight, false)
+    }
 }
 </script>
 
@@ -26,7 +49,14 @@ export default {
 .nav-bar{
     height: 70px;
     line-height: 70px;
-    border: 1px solid $colorH;
+    border-top: 1px solid $colorH;
+    &.isfixed{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: $colorG;
+        box-shadow: 0 5px 5px $colorE;
+    }
     .container{
         @include flex();
         .pro-title{
