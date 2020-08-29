@@ -1,4 +1,4 @@
-# mall
+# 小米商城
 
 ## Project setup
 ```
@@ -10,14 +10,10 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 页面登录的账号和密码一致即可
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+例如账号：admin1
+       密码：admin1
 ```
 
 ### Customize configuration
