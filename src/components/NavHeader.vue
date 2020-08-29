@@ -12,7 +12,7 @@
                     <a href="javascript:;" v-if="username">{{username}}</a>
                     <a href="javascript:;" v-if="!username" @click="login">登录</a>
                     <a href="javascript:;">我的订单</a>
-                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车</a>
+                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车({{cartCount}})</a>
                 </div>
             </div>
         </div>
@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'nav-header',
     data() {
@@ -175,9 +176,19 @@ export default {
                     price: '查看全部'
                 }
             ],
-            username: 'jack',
             phoneList: []
         }
+    },
+    computed: {
+        // username() {
+        //     //  不能放在data里面，组件加载有延迟，会导致获取到undefined，于是不显示
+        //     //  采用computed，只要属性不改变，就可以继续用缓存的值
+        //     return this.$store.state.username
+        // },
+        // cartCount() {
+        //     return this.$store.state.cartCount
+        // },
+        ...mapState(['username', 'cartCount'])
     },
     filters: {
         currency(val) {
@@ -233,6 +244,7 @@ export default {
                 background-color: $colorA;
                 text-align: center;
                 color: #ffffff;
+                margin-right: 0;
                 .icon-cart{
                     @include bgImg(16px,12px,'/imgs/icon-cart-checked.png');
                     margin-right: 4px;

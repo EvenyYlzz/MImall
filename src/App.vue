@@ -14,7 +14,23 @@ export default {
     return {
     }
   },
-  mounted () {
+  mounted() {
+    this.getUser()
+    this.getCartCount()
+  },
+  methods: {
+    getUser() {
+      this.axios.get('/user').then((res) => {
+        this.$store.dispatch('saveUserName', res.username)
+        //  todo 拉取用户信息保存到vuex里面
+      })
+    },
+    getCartCount() {
+      this.axios.get('/carts/products/sum').then((res) => {
+        this.$store.dispatch('saveCartCount', res)
+        //  todo 获取购物车商品数量保存到vuex里面
+      })
+    }
   }
 }
 </script>
