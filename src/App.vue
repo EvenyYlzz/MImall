@@ -20,13 +20,14 @@ export default {
   },
   methods: {
     getUser() {
-      this.axios.get('/user').then((res) => {
+      this.axios.get('/user').then((res = {}) => {
         this.$store.dispatch('saveUserName', res.username)
         //  todo 拉取用户信息保存到vuex里面
       })
     },
+    //  添加默认值，防止兼兼容性问题报错
     getCartCount() {
-      this.axios.get('/carts/products/sum').then((res) => {
+      this.axios.get('/carts/products/sum').then((res = 0) => {
         this.$store.dispatch('saveCartCount', res)
         //  todo 获取购物车商品数量保存到vuex里面
       })
