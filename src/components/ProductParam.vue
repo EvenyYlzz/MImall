@@ -2,7 +2,7 @@
     <div class="nav-bar" :class="{'isfixed':isFixed}">
         <div class="container">
             <div class="pro-title">
-                小米8 透明探索版
+                小米8
             </div>
             <div class="pro-param">
                 <a href="javascript:;">概述</a><span> | </span>
