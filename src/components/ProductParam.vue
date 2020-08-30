@@ -53,6 +53,7 @@ export default {
     height: 70px;
     line-height: 70px;
     border-top: 1px solid $colorH;
+    z-index: 10;
     &.isfixed{
         position: fixed;
         top: 0;

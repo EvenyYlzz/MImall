@@ -35,6 +35,7 @@ axios.interceptors.response.use(function (response) {
     if (path !== '#/index') {
       window.location.href = '/#/login'
     }
+    return Promise.reject(res)
     //  首页不用跳转，不管有没有登录，首页都是可以正常访问的
     // window.location.href = '/#/login' //  未登录的全部跳转到登陆页
   } else {

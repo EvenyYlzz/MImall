@@ -232,10 +232,12 @@ export default {
             })
         },
         addCart(id) {
-            this.axios.post('/cats', {
+            this.axios.post('/carts', {
                 productId: id,
                 selected: true
-            }).then(() => {
+            }).then((res) => {
+                this.showModal = true
+                this.$store.dispatch('saveCartCount', res.cartTotalQuantity)
             }).catch(() => {
                 this.showModal = true
             })
