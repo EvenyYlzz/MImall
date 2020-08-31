@@ -131,7 +131,14 @@ export default {
       },
       // 购物车下单
       order() {
-        this.$router.push('/order/confirm')
+          //  every判断其中每一项是否符合要求，全部符合就返回true，否则返回false
+          //  全部都没选中就会返回一个true
+          const isCheck = this.list.every(item => !item.productSelected)
+          if (isCheck) {
+              alert('请选择一件商品')
+          } else {
+              this.$router.push('/order/confirm')
+          }
       }
     }
 }
