@@ -213,7 +213,7 @@ export default {
             })
         },
         goToCart() {
-            this.$router.push()
+            this.$router.push('/cart')
         },
         login() {
             this.$router.push('/login')

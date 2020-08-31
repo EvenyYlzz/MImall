@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { Message } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import VueLazyLoad from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
 import store from './store'
@@ -39,11 +41,12 @@ axios.interceptors.response.use(function (response) {
     //  首页不用跳转，不管有没有登录，首页都是可以正常访问的
     // window.location.href = '/#/login' //  未登录的全部跳转到登陆页
   } else {
-    alert(res.msg)
+    Message.warning(res.msg)
     return Promise.reject(res)
   }
 })
 
+Vue.prototype.$message = Message
 Vue.use(VueAxios, axios)
 Vue.use(VueCookie)
 Vue.use(VueLazyLoad, {
