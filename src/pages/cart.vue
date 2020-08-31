@@ -9,7 +9,7 @@
       <div class="container">
         <div class="cart-box">
           <ul class="cart-item-head">
-            <li class="col-1"><span class="checkbox" v-bind:class="{'checked':allChecked}"></span>全选</li>
+            <li class="col-1"><span class="checkbox" v-bind:class="{'checked':allChecked}" @click="toggleAll"></span>全选</li>
             <li class="col-3">商品名称</li>
             <li class="col-1">单价</li>
             <li class="col-2">数量</li>
@@ -78,12 +78,21 @@ export default {
     },
     methods: {
       getCartList() {
-        this.axios.get('/carts').then((res) => {
+          this.axios.get('/carts').then((res) => {
+              this.renderData(res)
+          })
+      },
+      toggleAll() {
+          const url = this.allChecked ? '/carts/unSelectAll' : '/carts/selectAll'
+          this.axios.put(url).then((res) => {
+              this.renderData(res)
+          })
+      },
+      renderData(res) {
           this.list = res.cartProductVoList || []
           this.allChecked = res.selectedAll
           this.cartTotalPrice = res.cartTotalPrice
           this.checkedNum = this.list.filter(item => item.productSelected).length
-        })
       },
       // 购物车下单
       order() {
