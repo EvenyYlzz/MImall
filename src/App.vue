@@ -28,6 +28,12 @@ export default {
       })
     },
     //  添加默认值，防止兼兼容性问题报错
+    //  添加默认值，防止兼兼容性问题报错
+    //  添加默认值，防止兼兼容性问题报错
+    //  添加默认值，防止兼兼容性问题报错
+    //  添加默认值，防止兼兼容性问题报错
+    //  添加默认值，防止兼兼容性问题报错
+    //  添加默认值，防止兼兼容性问题报错
     getCartCount() {
       this.axios.get('/carts/products/sum').then((res = 0) => {
         this.$store.dispatch('saveCartCount', res)
