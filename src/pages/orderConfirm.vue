@@ -62,22 +62,22 @@
           <div class="item-good">
             <h2>商品</h2>
             <ul>
-              <li>
+              <li v-for="(item, index) in cartList" :key="index">
                 <div class="good-name">
-                  <img src="/imgs/item-box-3-1.png" alt="">
+                  <img v-lazy="item.productMainImage" alt="#">
+                  <span>{{item.productName+ ' ' + item.productSubtitle}}</span>
+                </div>
+                <div class="good-price">{{item.productPrice}}元x{{item.quantity}}</div>
+                <div class="good-total">{{item.productTotalPrice}}元</div>
+              </li>
+              <!-- <li>
+                <div class="good-name">
+                  <img src="/imgs/item-box-1.png" alt="">
                   <span>小米8 6GB 全息幻彩紫 64GB</span>
                 </div>
                 <div class="good-price">1999元x2</div>
                 <div class="good-total">1999元</div>
-              </li>
-              <li>
-                <div class="good-name">
-                  <img src="/imgs/item-box-3-1.png" alt="">
-                  <span>小米8 6GB 全息幻彩紫 64GB</span>
-                </div>
-                <div class="good-price">1999元x2</div>
-                <div class="good-total">1999元</div>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="item-shipping">
@@ -92,11 +92,11 @@
           <div class="detail">
             <div class="item">
               <span class="item-name">商品件数：</span>
-              <span class="item-val">1件</span>
+              <span class="item-val">{{count}}件</span>
             </div>
             <div class="item">
               <span class="item-name">商品总价：</span>
-              <span class="item-val">2599元</span>
+              <span class="item-val">{{cartTotalPrice}}元</span>
             </div>
             <div class="item">
               <span class="item-name">优惠活动：</span>
@@ -108,7 +108,7 @@
             </div>
             <div class="item-total">
               <span class="item-name">应付总额：</span>
-              <span class="item-val">2599元</span>
+              <span class="item-val">{{cartTotalPrice}}元</span>
             </div>
           </div>
           <div class="btn-group">
@@ -169,7 +169,8 @@ export default {
     return {
         list: [], // 收获地址列表
         cartList: [], // 购物车中需要结算的商品列表
-        showEditModal: false// 是否显示新增或者编辑弹框
+        showEditModal: false, // 是否显示新增或者编辑弹框
+        count: 0 // 商品数量
     }
   },
   components: {
@@ -177,6 +178,7 @@ export default {
   },
   mounted() {
       this.getAddressList()
+      this.getCartList()
   },
   methods: {
         getAddressList() {
@@ -189,6 +191,9 @@ export default {
                 const list = res.cartProductVoList // 获取购物车中所有的数据
                 this.cartTotalPrice = res.cartTotalPrice // 商品总金额
                 this.cartList = list.filter(item => item.productSelected) // 过渡已选择商品
+                this.cartList.map(item => {
+                    this.count += item.quantity
+                })
             })
         },
         // 打开新增地址弹框
