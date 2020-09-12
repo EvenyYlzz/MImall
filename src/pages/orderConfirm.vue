@@ -171,6 +171,7 @@ export default {
         cartList: [], // 购物车中需要结算的商品列表
         showEditModal: false, // 是否显示新增或者编辑弹框
         count: 0 // 商品数量
+        // 这里显示主要数据
     }
   },
   components: {
