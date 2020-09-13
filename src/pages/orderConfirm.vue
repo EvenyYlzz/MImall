@@ -32,7 +32,7 @@
                     {{item.receiverProvince+' '+item.receiverCity+' '+item.receiverDistrict+' '+item.receiverAddress}}
                 </div>
                 <div class="action">
-                  <a href="javascript:;" class="fl">
+                  <a href="javascript:;" class="fl" @click="delAddress(item)">
                     <svg class="icon icon-del"><use xlink:href="#icon-del"></use></svg>
                   </a>
                   <a href="javascript:;" class="fr">
@@ -40,7 +40,7 @@
                   </a>
                 </div>
               </div>
-              <div class="addr-info">
+              <!-- <div class="addr-info">
                 <h2>小马哥</h2>
                 <div class="phone">176****1717</div>
                 <div class="street">北京 北京市 昌平区 回龙观<br>东大街地铁</div>
@@ -52,7 +52,7 @@
                     <svg class="icon icon-edit"><use xlink:href="#icon-edit"></use></svg>
                   </a>
                 </div>
-              </div>
+              </div> -->
               <div class="addr-add" @click="openAddressModal">
                 <div class="icon-add"></div>
                 <div>添加新地址</div>
@@ -70,14 +70,6 @@
                 <div class="good-price">{{item.productPrice}}元x{{item.quantity}}</div>
                 <div class="good-total">{{item.productTotalPrice}}元</div>
               </li>
-              <!-- <li>
-                <div class="good-name">
-                  <img src="/imgs/item-box-1.png" alt="">
-                  <span>小米8 6GB 全息幻彩紫 64GB</span>
-                </div>
-                <div class="good-price">1999元x2</div>
-                <div class="good-total">1999元</div>
-              </li> -->
             </ul>
           </div>
           <div class="item-shipping">
@@ -123,6 +115,7 @@
       btnType="1"
       :showModal="showEditModal"
       @cancel="showEditModal=false"
+      @submit="submitAddress"
     >
       <template v-slot:body>
         <div class="edit-wrap">
@@ -159,9 +152,21 @@
         </div>
       </template>
     </modal>
+    <modal
+      title="删除确认"
+      btnType="1"
+      :showModal="showDelModal"
+      @cancel="showDelModal=false"
+      @submit="submitAddress"
+    >
+      <template v-slot:body>
+        <p>您确认要删除此地址吗？</p>
+      </template>
+    </modal>
   </div>
 </template>
 <script>
+// import { use } from 'chai'
 import Modal from './../components/Modal'
 export default {
   name: 'order-confirm',
@@ -170,8 +175,10 @@ export default {
         list: [], // 收获地址列表
         cartList: [], // 购物车中需要结算的商品列表
         showEditModal: false, // 是否显示新增或者编辑弹框
-        count: 0 // 商品数量
-        // 这里显示主要数据
+        count: 0, // 商品数量
+        checkedItem: {}, //  选中的商品的对象
+        userAction: '', // 用户行为，0表示新增，1表示编辑，2表示删除
+        showDelModal: false
     }
   },
   components: {
@@ -187,6 +194,41 @@ export default {
                 this.list = res.list
             })
         },
+        delAddress(item) {
+            this.checkedItem = item
+            this.userAction = 2
+            this.showDelModal = true
+        },
+        // 打开新增地址弹框
+        openAddressModal() {
+            this.showEditModal = true
+        },
+        closeModal() {
+            this.checkedItem = {}
+            this.userAction = 0
+            this.showEditModal = false
+            this.showDelModal = false
+        },
+        // 地址删除、编辑、新增功能
+        submitAddress() {
+            const { checkedItem, userAction } = this
+            let method, url
+            if (userAction === 0) {
+                method = 'post'
+                url = '/shippings'
+            } else if (userAction === 1) {
+                method = 'put'
+                url = `/shippings/${checkedItem.id}`
+            } else {
+                method = 'delete'
+                url = `/shippings/${checkedItem.id}`
+            }
+            this.axios[method](url).then(() => {
+                this.closeModal()
+                this.getAddressList()
+                this.$message.success('操作成功')
+            })
+        },
         getCartList() {
             this.axios.get('./carts').then((res) => {
                 const list = res.cartProductVoList // 获取购物车中所有的数据
@@ -196,13 +238,6 @@ export default {
                     this.count += item.quantity
                 })
             })
-        },
-        // 打开新增地址弹框
-        openAddressModal() {
-        this.showEditModal = true
-        },
-        closeModal() {
-        this.showEditModal = false
         },
         // 订单提交
         orderSubmit() {
