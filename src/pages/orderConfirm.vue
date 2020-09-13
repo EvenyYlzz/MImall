@@ -25,7 +25,7 @@
           <div class="item-address">
             <h2 class="addr-title">收货地址</h2>
             <div class="addr-list clearfix">
-              <div class="addr-info" v-for="(item, index) in list" :key="index">
+              <div class="addr-info" :class="{'checked': index == checkIndex}" @click="checkIndex=index" v-for="(item, index) in list" :key="index">
                 <h2>{{item.receiverName}}</h2>
                 <div class="phone">{{item.receiverMobile}}</div>
                 <div class="street">
@@ -35,7 +35,7 @@
                   <a href="javascript:;" class="fl" @click="delAddress(item)">
                     <svg class="icon icon-del"><use xlink:href="#icon-del"></use></svg>
                   </a>
-                  <a href="javascript:;" class="fr">
+                  <a href="javascript:;" class="fr" @click="editAddressModel(item)">
                     <svg class="icon icon-edit"><use xlink:href="#icon-edit"></use></svg>
                   </a>
                 </div>
@@ -166,7 +166,8 @@ export default {
         checkedItem: {}, //  选中的商品的对象
         userAction: '', // 用户行为，0表示新增，1表示编辑，2表示删除
         showDelModal: false,
-        cartTotalPrice: 0
+        cartTotalPrice: 0,
+        checkIndex: 0
     }
   },
   components: {
@@ -198,6 +199,11 @@ export default {
             this.userAction = 0
             this.showEditModal = false
             this.showDelModal = false
+        },
+        editAddressModel(item) {
+            this.userAction = 1
+            this.checkedItem = item
+            this.showEditModal = true
         },
         // 地址删除、编辑、新增功能
         submitAddress() {
@@ -262,12 +268,21 @@ export default {
         },
         // 订单提交
         orderSubmit() {
-        this.$router.push({
-            path: '/order/pay',
-            query: {
-            orderNo: 123
+            const item = this.list[this.checkIndex]
+            if (!item) {
+                this.$message.error('请选择一个收货地址')
+                return
             }
-        })
+            this.axios.post('/orders', {
+                shippingId: item.id
+            }).then((res) => {
+                this.$router.push({
+                    path: '/order/pay',
+                    query: {
+                        orderNo: res.orderNo
+                    }
+                })
+            })
         }
   }
 }
