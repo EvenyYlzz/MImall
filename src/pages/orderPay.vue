@@ -1,5 +1,10 @@
 <template>
   <div class="order-pay">
+    <order-header title="订单支付">
+      <template v-slot:tip>
+        <span>请谨防钓鱼链接或诈骗电话，了解更多</span>
+      </template>
+    </order-header>
     <div class="wrapper">
       <div class="container">
         <div class="order-wrap">
@@ -11,7 +16,7 @@
               <p>收货信息：{{addressInfo}}</p>
             </div>
             <div class="order-total">
-              <p>应付总额：<span>{{payment}}</span>元</p>
+              <p>应付总额：<span>{{totalMent}}</span>元</p>
               <p>订单详情<em class="icon-down" :class="{'up': showDetail}"  @click="showDetail=!showDetail"></em></p>
             </div>
           </div>
@@ -72,6 +77,7 @@
 import QRcode from 'qrcode'
 import ScanPayCode from './../components/ScanPayCode'
 import Modal from './../components/Modal'
+import OrderHeader from './../components/OrderHeader'
 export default {
   name: 'order-pay',
   data() {
@@ -89,6 +95,7 @@ export default {
     }
   },
   components: {
+      OrderHeader,
       ScanPayCode,
       Modal
   },
@@ -110,7 +117,7 @@ export default {
             const item = res.shippingVo
             this.addressInfo = `${item.receiverName} ${item.receiverMobile} ${item.receiverProvince} ${item.receiverCity} ${item.receiverDistrict} ${item.receiverAddress}`
             this.orderDetail = res.orderItemVoList
-            this.totalMoney = res.payment
+            this.totalMent = res.payment
         })
     },
     //  轮询当前订单支付状态
