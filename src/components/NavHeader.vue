@@ -12,7 +12,7 @@
                     <a href="javascript:;" v-if="username">{{username}}</a>
                     <a href="javascript:;" v-if="!username" @click="login">登录</a>
                     <a href="javascript:;" v-if="username" @click="logout">退出</a>
-                    <a href="javascript:;">我的订单</a>
+                    <a href="/#/order/list">我的订单</a>
                     <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车({{cartCount}})</a>
                 </div>
             </div>
@@ -45,23 +45,6 @@
                     </div>
                     <div class="item-menu">
                         <span>RedMi手机</span>
-                        <!-- <div class="children">
-                            <ul>
-                                <li class="product" v-for="(item) in xiaomishouji" :key="item.id">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img :src="item.img" alt="#">
-                                        </div>
-                                        <div class="pro-name">
-                                            {{item.name}}
-                                        </div>
-                                        <div class="pro-price">
-                                            {{item.price}}
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div> -->
                     </div>
                     <div class="item-menu">
                         <span>电视</span>
