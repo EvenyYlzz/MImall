@@ -46,7 +46,9 @@
               </div>
             </div>
           </div>
+          <!-- 分页器显示与否，暂时关闭 -->
           <el-pagination
+            v-if="false"
             class="pagination"
             background
             layout="prev, pager, next"
@@ -55,6 +57,9 @@
             @current-change="handleChange"
           >
           </el-pagination>
+          <div class="load-more">
+            <el-button type="primary" :loading="loading" @click="loadMore">加载更多</el-button>
+          </div>
           <no-data v-if="!loading && list.length == 0"></no-data>
         </div>
       </div>
@@ -65,19 +70,20 @@
   import OrderHeader from './../components/OrderHeader'
   import Loading from './../components/Loading'
   import NoData from './../components/NoData'
-  import { Pagination } from 'element-ui'
+  import { Pagination, Button } from 'element-ui'
   export default {
     name: 'order-list',
     components: {
       OrderHeader,
       Loading,
       NoData,
-      [Pagination.name]: Pagination
+      [Pagination.name]: Pagination,
+      [Button.name]: Button
     },
     data() {
       return {
         list: [],
-        loading: true,
+        loading: false,
         pageSize: 10,
         pageNum: 1,
         total: 0
@@ -88,13 +94,26 @@
     },
     methods: {
       getOrderList() {
+        this.loading = true
         this.axios.get('/orders', {
            params: {
+              pageSize: 2,
               pageNum: this.pageNum
            }
         }).then((res) => {
             this.loading = false
-            this.list = res.list
+            //  分页器分页加载数据
+            // this.list = res.list
+            //  老师的累加方法
+            //  this.list = this.list.concat(res.list)
+            //  加载更多累加数据
+            //  自己写的方法
+            if (this.pageNum === 1) {
+                this.list = res.list
+            } else {
+                this.list.push(res.list[0])
+                this.list.push(res.list[1])
+            }
             this.total = res.total
         })
         .catch(() => {
@@ -120,6 +139,10 @@
       //  pageNum当前页数
       handleChange(pageNum) {
           this.pageNum = pageNum
+          this.getOrderList()
+      },
+      loadMore() {
+          this.pageNum++
           this.getOrderList()
       }
     }
