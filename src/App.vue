@@ -6,6 +6,7 @@
 
 <script>
 // import storage from './storage/index'
+//  测试git配置
 export default {
   name: 'app',
   components: {
