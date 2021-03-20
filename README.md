@@ -1,20 +1,19 @@
 # 小米商城
 
-## Project setup
-```
-npm install
-```
+#### 描述
+复刻小米商城、包含登录、产品首页、产品站、产品详情、购物车、订单确认、订单支付、订单列表八大页面
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+#### 涉及技术栈
+Vue + Vue router + Vuex + Element UI
+#### 项目安装
+1.  git clone
+2.  cd MImall
+3.  npm install
+4.  npm run serve
 
-### 页面登录的账号和密码一致即可
-```
-例如账号：admin1
-       密码：admin1
-```
+#### Instructions
+1.  点进去之后系统需要登陆，但这里并没有做前后端的真实登陆校验，只需要账号与密码一致即可，如账号：admin、密码：admin
+2.  该商城可以选择购买商品进行付款，付款对接了支付宝支付跟微信支付，但是都是只付款一分钱而已
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### 完成工作
+对整体的动态路由设定，并确定能够复用的组件、页面结构，进行模块化开发,此项目对接了支付宝微信支付，并 进行了图片压缩、页面按需加载等优化
